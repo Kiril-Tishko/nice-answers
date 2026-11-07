@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nice Answers</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A diplomat's phrasebook: practice kind, graceful answers for awkward moments, one situation at a time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: one briefing card at a time in a single 780px column; topic index above, sticky deck controls below. */
+:root {
+  --ground: #E7EBEE;       /* diplomatic-pouch grey */
+  --card: #FCFCFA;         /* briefing paper */
+  --ink: #17202A;
+  --muted: #576372;
+  --rule: #C9D0D7;
+  --accent: #1D4E63;       /* protocol blue */
+  --accent-ink: #FFFFFF;
+  --accent-soft: #DDE8ED;
+  --stamp: #9A2F2A;        /* rubber-stamp red, used sparingly */
+  --stamp-soft: #F4E7E4;
+  --shadow: 0 1px 2px rgba(23, 32, 42, .06), 0 10px 30px rgba(23, 32, 42, .08);
+
+  --f-display: "Bodoni Moda", "Bodoni 72", Didot, "Didot LT STD", Georgia, serif;
+  --f-body: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --fs-label: .72rem;
+  --fs-small: .9rem;
+  --fs-body: 1rem;
+  --fs-situation: clamp(1.15rem, 1rem + .8vw, 1.45rem);
+  --fs-phrase: clamp(1.5rem, 1.15rem + 1.6vw, 2.15rem);
+  --fs-brand: clamp(2rem, 1.4rem + 2.6vw, 3rem);
+
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0F1418;
+    --card: #182027;
+    --ink: #E6EAED;
+    --muted: #98A3AE;
+    --rule: #2C3741;
+    --accent: #88BCD1;
+    --accent-ink: #0F1418;
+    --accent-soft: #1D313C;
+    --stamp: #E8928A;
+    --stamp-soft: #2D1F20;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 10px 30px rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0F1418;
+  --card: #182027;
+  --ink: #E6EAED;
+  --muted: #98A3AE;
+  --rule: #2C3741;
+  --accent: #88BCD1;
+  --accent-ink: #0F1418;
+  --accent-soft: #1D313C;
+  --stamp: #E8928A;
+  --stamp-soft: #2D1F20;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 10px 30px rgba(0, 0, 0, .35);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+button, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.app {
+  max-width: 780px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: clamp(18px, 4vw, 40px) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Masthead */
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px 24px;
+}
+.brand h1 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: var(--fs-brand);
+  line-height: 1;
+  letter-spacing: -.01em;
+  font-variation-settings: "opsz" 96;
+}
+.brand h1 em { font-style: italic; color: var(--accent); }
+.tag {
+  margin: 10px 0 0;
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.tools { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--card);
+  padding: 2px;
+}
+.seg button, .tool {
+  border: 0;
+  background: none;
+  padding: 7px 13px;
+  border-radius: 2px;
+  font-size: var(--fs-small);
+  color: var(--muted);
+  min-height: 36px;
+}
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--card); }
+.tool {
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--card);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.tool svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tool[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+/* Topic index */
+.topics {
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--rule);
+}
+.topics::-webkit-scrollbar { display: none; }
+.chips { display: flex; gap: 0 22px; white-space: nowrap; }
+@media (min-width: 720px) { .chips { flex-wrap: wrap; } }
+.chip {
+  border: 0;
+  background: none;
+  padding: 10px 0 9px;
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.chip:hover { color: var(--ink); }
+.chip[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.chip .count { color: var(--stamp); margin-left: 5px; font-variant-numeric: tabular-nums; }
+
+/* Briefing card */
+.card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 4.5vw, 42px);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: min(540px, 68vh);
+  scroll-margin-top: 12px;
+  touch-action: pan-y;
+}
+.card-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--rule);
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.card-head .cat { color: var(--accent); }
+.card-head .pos { font-variant-numeric: tabular-nums; margin-left: auto; }
+.eyebrow, .label {
+  margin: 0 0 8px;
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.situation {
+  margin: 0;
+  font-size: var(--fs-situation);
+  font-weight: 500;
+  line-height: 1.45;
+  max-width: 34em;
+  text-wrap: pretty;
+}
+.attempt { display: flex; flex-direction: column; gap: 8px; }
+.prompt {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+textarea {
+  width: 100%;
+  min-height: 3.4em;
+  resize: vertical;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: transparent;
+  padding: 10px 12px;
+  line-height: 1.45;
+}
+textarea::placeholder { color: var(--muted); opacity: .85; }
+textarea:focus-visible { outline-offset: 0; }
+.open-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 14px 22px;
+  font-weight: 600;
+  letter-spacing: .01em;
+  min-height: 48px;
+}
+.open-btn:hover { filter: brightness(1.08); }
+.open-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* The answer */
+.answer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--rule);
+  scroll-margin-top: 16px;
+}
+.answer:focus { outline: none; }
+.stamp {
+  align-self: flex-start;
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--stamp);
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  padding: 4px 9px 3px;
+  transform: rotate(-2deg);
+}
+.phrase {
+  margin: 0;
+  font-family: var(--f-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--fs-phrase);
+  line-height: 1.22;
+  text-wrap: balance;
+  font-variation-settings: "opsz" 48;
+}
+.alts ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.alts li { position: relative; padding-left: 18px; max-width: 62ch; }
+.alts li::before { content: "\2013"; position: absolute; left: 0; color: var(--muted); }
+.why p:last-child { margin: 0; max-width: 62ch; }
+.avoid {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 3px;
+  background: var(--stamp-soft);
+  max-width: 62ch;
+}
+.avoid .label { display: block; color: var(--stamp); margin-bottom: 4px; }
+
+/* End-of-deck and empty states */
+.finish {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+}
+.finish h2 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.2rem);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.finish p { margin: 0; color: var(--muted); max-width: 46ch; }
+.finish-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+
+/* Buttons shared by deck bar and end states */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 11px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--card);
+  font-weight: 500;
+}
+.btn:hover:not(:disabled) { border-color: var(--muted); }
+.btn:disabled { opacity: .4; cursor: default; }
+.btn.primary { background: var(--ink); color: var(--card); border-color: var(--ink); }
+.btn.primary:hover:not(:disabled) { border-color: var(--ink); filter: brightness(1.15); }
+.btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+.btn.save[aria-pressed="true"] { color: var(--stamp); border-color: currentColor; }
+.btn.save[aria-pressed="true"] svg { fill: currentColor; }
+
+/* Deck bar */
+.deckbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding-block: 12px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: var(--ground);
+}
+.deckbar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 18px;
+  background: linear-gradient(to top, var(--ground), transparent);
+  pointer-events: none;
+}
+.deckbar #prev { justify-self: start; }
+.deckbar #next { justify-self: end; }
+.keys {
+  margin: -6px 0 22px;
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  color: var(--muted);
+}
+.keys kbd {
+  font-family: inherit;
+  border: 1px solid var(--rule);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 0 5px;
+  background: var(--card);
+}
+@media (hover: none) { .keys { display: none; } }
+
+/* List view */
+.list-head { margin: 0; color: var(--muted); font-size: var(--fs-small); }
+.ledger {
+  list-style: none;
+  margin: 0 0 32px;
+  padding: 0;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+}
+.ledger li + li { border-top: 1px solid var(--rule); }
+.row {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+  padding: 18px clamp(16px, 3vw, 28px);
+}
+.row:hover { background: var(--accent-soft); }
+.row-meta {
+  font-family: var(--f-mono);
+  font-size: var(--fs-label);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.row-meta .saved-mark { color: var(--stamp); }
+.row-sit { color: var(--muted); font-size: var(--fs-small); }
+.row-ans {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.28rem;
+  line-height: 1.3;
+}
+
+/* Motion */
+@keyframes enterNext { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: none; } }
+@keyframes enterPrev { from { opacity: 0; transform: translateX(-22px); } to { opacity: 1; transform: none; } }
+@keyframes unfold { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes stampIn {
+  0% { opacity: 0; transform: rotate(-9deg) scale(1.45); }
+  60% { opacity: 1; transform: rotate(-1deg) scale(.96); }
+  100% { opacity: 1; transform: rotate(-2deg) scale(1); }
+}
+.card.enter-next { animation: enterNext .32s cubic-bezier(.2, .7, .2, 1); }
+.card.enter-prev { animation: enterPrev .32s cubic-bezier(.2, .7, .2, 1); }
+.answer.is-new { animation: unfold .45s cubic-bezier(.2, .7, .2, 1) both; }
+.answer.is-new .stamp { animation: stampIn .5s .12s cubic-bezier(.2, .7, .2, 1) both; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+/* Phones: keep the situation and the "Open the answer" button above the deck bar */
+@media (max-width: 560px) {
+  .app { gap: 14px; }
+  .masthead { gap: 12px; }
+  .brand h1 { font-size: 2.1rem; }
+  .tag { margin-top: 6px; font-size: .64rem; letter-spacing: .1em; }
+  .seg button, .tool { min-height: 34px; padding: 5px 11px; }
+  .card { padding: 20px 18px 22px; gap: 16px; min-height: 0; }
+  .card-head { padding-bottom: 10px; }
+  .prompt { font-size: 1.1rem; }
+  textarea { min-height: 2.8em; }
+  .btn { padding-inline: 12px; }
+  .deckbar { gap: 8px; padding-top: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="masthead">
+    <div class="brand">
+      <h1>Nice <em>Answers</em></h1>
+      <p class="tag">A diplomat’s phrasebook for awkward moments</p>
+    </div>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="View">
+        <button type="button" id="viewSlides" aria-pressed="true">Slides</button>
+        <button type="button" id="viewList" aria-pressed="false">List</button>
+      </div>
+      <button type="button" class="tool" id="shuffle" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+        Shuffle
+      </button>
+    </div>
+  </header>
+
+  <nav class="topics" aria-label="Topics">
+    <div class="chips" id="chips"></div>
+  </nav>
+
+  <main id="stage">
+    <article class="card" id="card" aria-live="off"></article>
+    <section id="list" aria-label="All situations" hidden></section>
+  </main>
+
+  <footer class="deckbar" id="deckbar">
+    <button type="button" class="btn" id="prev" aria-label="Previous situation">← Back</button>
+    <button type="button" class="btn save" id="save" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h11v17l-5.5-3.8-5.5 3.8z"/></svg>
+      <span id="saveLabel">Remember</span>
+    </button>
+    <button type="button" class="btn primary" id="next" aria-label="Next situation">Next →</button>
+  </footer>
+  <p class="keys" id="keys"><kbd>←</kbd> <kbd>→</kbd> move &nbsp;·&nbsp; <kbd>Space</kbd> open the answer &nbsp;·&nbsp; <kbd>S</kbd> remember</p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var CATS = [
+    { id: "no",       label: "Saying no" },
+    { id: "sidestep", label: "Not answering" },
+    { id: "honest",   label: "Kind honesty" },
+    { id: "disagree", label: "Disagreeing" },
+    { id: "time",     label: "Buying time" },
+    { id: "pressure", label: "Under pressure" },
+    { id: "grace",    label: "Grace notes" },
+    { id: "exit",     label: "Exits" },
+    { id: "diplomat", label: "Diplomat-speak" }
+  ];
+
+  // c = topic, s = situation, a = the talking point, alts = other ways to say it,
+  // why = why it works (or, for diplomat-speak, what it really means), avoid = what not to say.
+  var CARDS = [
+    // ── Saying no ──────────────────────────────────────────────
+    { c: "no",
+      s: "A colleague invites you to their weekend barbecue. You’d rather not go, and you don’t want them to feel rejected.",
+      a: "Thank you so much for thinking of me. I can’t make it, but I hope it’s a wonderful afternoon.",
+      alts: ["That’s so kind. I already have plans that day, so enjoy it for me.",
+             "I’ll have to miss this one, but I really appreciate the invitation."],
+      why: "Gratitude first, then a clear no, then a warm wish. You don’t owe a reason. A detailed excuse only invites a counter-offer like “Come after, then!”",
+      avoid: "“Maybe, I’ll see.” A vague maybe keeps them waiting and ends up feeling worse than a kind no." },
+
+    { c: "no",
+      s: "A friend asks you to help them move house on Saturday. You can’t face it.",
+      a: "I wish I could, but I can’t take that on this weekend. I hope the move goes smoothly.",
+      alts: ["I can’t help with the boxes, but can I bring you dinner that evening?"],
+      why: "“I can’t take that on” is about your capacity, not about them. Offering something smaller, only if you mean it, shows you still care." },
+
+    { c: "no",
+      s: "Your manager asks you to take on a new project. You’re already at full capacity.",
+      a: "I’d like to help. If I take this on, which of my current priorities should move?",
+      alts: ["I want to do this well, and right now I can’t without dropping something. Can we look at my list together?"],
+      why: "You don’t refuse. You make the trade-off visible and let the person who sets priorities decide. It reads as responsible, not unwilling.",
+      avoid: "“I’m too busy.” It sounds like a complaint and leaves the problem with you." },
+
+    { c: "no",
+      s: "A friend asks to borrow a significant amount of money.",
+      a: "I have a personal rule never to lend money to friends. Our friendship matters too much to me to risk it.",
+      alts: ["I’m not able to lend money, but I’d be glad to help you think through other options."],
+      why: "A standing rule takes the judgment out of it. You’re not deciding whether they can be trusted; you’re keeping a principle that protects you both." },
+
+    { c: "no",
+      s: "Someone you like as a friend asks you out on a date.",
+      a: "I’m really flattered, and thank you for asking. I don’t feel the same way, but I truly value you as a friend.",
+      why: "Here, kindness means clarity. A soft “I’m just busy lately” leaves them hoping. Thanking them honors the courage it took to ask." },
+
+    { c: "no",
+      s: "You’re asked to join a committee or volunteer for an event. You don’t want to.",
+      a: "I’m honored you asked. I couldn’t give it the attention it deserves right now, so I’ll have to decline.",
+      why: "Framing the no around doing the job properly makes it a compliment to the role, not a rejection of the people asking." },
+
+    { c: "no",
+      s: "A salesperson keeps pushing a product after you’ve said you’re just looking.",
+      a: "Thank you, you’ve been very helpful. It’s not for me today.",
+      why: "Thank them for their effort, then close the door. If they persist, repeat the same sentence calmly. No new reasons means nothing to argue with." },
+
+    // ── Not answering ──────────────────────────────────────────
+    { c: "sidestep",
+      s: "At a family dinner, a relative asks how much you earn.",
+      a: "Enough to be comfortable, thank you. How’s the new job treating you?",
+      alts: ["I keep money talk between me and my bank, but I’m happy where I am."],
+      why: "You answer the real question (are you doing all right?) without the number, then offer them a topic about themselves. Most people gladly take it." },
+
+    { c: "sidestep",
+      s: "Someone asks, yet again, when you’re going to get married or have children.",
+      a: "When there’s news, you’ll be among the first to know.",
+      alts: ["That’s a big question for a Tuesday! How are things with you?"],
+      why: "It’s warm, it promises to include them, and it ends the topic without revealing anything. Nobody can push past it without seeming rude." },
+
+    { c: "sidestep",
+      s: "A coworker leans in: “Did you hear what happened with Sam?”",
+      a: "I’d rather hear it from Sam. But how are you doing?",
+      alts: ["I’m sure there’s more to it than any of us know."],
+      why: "You decline the gossip without lecturing anyone, then turn to the person in front of you. People learn that you’re safe to confide in." },
+
+    { c: "sidestep",
+      s: "A dinner guest is trying to start a heated political argument.",
+      a: "I have a rule never to discuss politics before dessert.",
+      alts: ["I think we’d both rather enjoy this evening. Tell me about your trip."],
+      why: "Humor sets the boundary without accusing anyone. It’s an old dinner-party convention for good reason: it protects the evening, and everyone can laugh along." },
+
+    { c: "sidestep",
+      s: "Someone asks about something confidential at work: a reorganization, a deal, a colleague’s situation.",
+      a: "I’m not in a position to comment on that.",
+      alts: ["That’s not mine to share, I’m afraid."],
+      why: "The standard line of spokespeople and press secretaries. It is neither a lie nor a confirmation, and “not in a position” places the limit on your role, not on the person asking.",
+      avoid: "“No comment.” It sounds defensive and suggests there’s a scandal." },
+
+    { c: "sidestep",
+      s: "Two friends have fallen out, and one wants you to agree the other was in the wrong.",
+      a: "I care about you both, so I’m going to stay out of the middle on this one.",
+      why: "Neutrality stated openly is respected. Taking sides in private has a way of being repeated in public." },
+
+    { c: "sidestep",
+      s: "A friend asks what you think of their new partner. You’re not a fan.",
+      a: "I’m still getting to know them. What do you love most about them?",
+      why: "It’s true, it’s gentle, and it turns the conversation to your friend’s feelings. You keep your options open without telling a lie." },
+
+    { c: "sidestep",
+      s: "In a job interview you’re asked, “Why did you leave your last job?” It ended badly.",
+      a: "I learned a lot there, and I was ready for a role that fits where I want to grow.",
+      why: "Forward-looking and gracious. Criticizing a former employer makes the interviewer wonder what you’ll one day say about them." },
+
+    { c: "sidestep",
+      s: "Someone asks a question that is simply too personal.",
+      a: "Oh, that’s a story for another day!",
+      alts: ["I tend to keep that side of life private, but thank you for asking."],
+      why: "Said lightly and with a smile, nobody loses face. You’ve closed the door without slamming it." },
+
+    { c: "sidestep",
+      s: "A colleague wants you to join in complaining about your manager.",
+      a: "I’d rather not talk about them when they’re not here. Have you been able to raise it with them?",
+      why: "You don’t join in and you don’t scold. You point gently toward the one person who can actually fix it." },
+
+    { c: "sidestep",
+      s: "You’re asked for your opinion on something and you’d rather not give it.",
+      a: "I’m still making up my mind. What’s your take?",
+      why: "People who ask for your opinion often want to share theirs. Inviting it is generous, and yours stays private." },
+
+    // ── Kind honesty ───────────────────────────────────────────
+    { c: "honest",
+      s: "You open a gift and you really don’t like it. They’re watching your face.",
+      a: "How thoughtful of you to think of me. Thank you.",
+      why: "You thank them for the thought, which is real. You don’t need to praise the object. Warmth in your voice does the rest.",
+      avoid: "“I love it!” when you don’t. Overacting is easy to spot, and you may receive another one next year." },
+
+    { c: "honest",
+      s: "After dinner at a friend’s home, they ask how you liked the meal. It wasn’t good.",
+      a: "Thank you for having us. You went to so much trouble, and it was such a lovely evening.",
+      why: "Praise what was genuinely good: the effort, the company, the occasion. Hosting is an act of care, and that is what you’re honoring." },
+
+    { c: "honest",
+      s: "A friend shows you their song, painting or business idea and asks what you honestly think. It needs work.",
+      a: "I can see how much of yourself you’ve put into this. Can I share one thing that would make it even stronger?",
+      why: "Recognize the effort, then ask permission. One point, not ten, makes it useful instead of crushing. “Even stronger” assumes it’s already good." },
+
+    { c: "honest",
+      s: "A colleague asks for feedback on a report that has real problems.",
+      a: "The structure works really well. The one thing I’d look at is the data section. I think it’ll get questions.",
+      alts: ["What’s working is… What would take it further is…"],
+      why: "Specific praise makes the criticism believable. Saying “it’ll get questions” puts you on their side, preparing them for the audience." },
+
+    { c: "honest",
+      s: "A proud new parent shows you their baby. Honestly, the baby looks like every other baby.",
+      a: "Look at that little face! You must be so proud.",
+      why: "Speak to the parent’s joy, not the baby’s looks. It’s completely sincere, and it’s what they hope to hear." },
+
+    { c: "honest",
+      s: "Before an event, a friend asks, “Do I look all right?” The outfit doesn’t suit them.",
+      a: "You look great. Though honestly, the navy one is even better on you.",
+      why: "Never say this one is bad; say another one is better. It’s honest, it’s useful, and their confidence stays intact." },
+
+    { c: "honest",
+      s: "Someone shows off a new house, car or haircut that isn’t to your taste.",
+      a: "It’s so you!",
+      alts: ["You must be thrilled."],
+      why: "A classic. It’s true, it’s warm, and it’s about their happiness rather than your taste." },
+
+    // ── Disagreeing ────────────────────────────────────────────
+    { c: "disagree",
+      s: "In a meeting, someone proposes something you strongly disagree with.",
+      a: "I see it a little differently. May I offer another perspective?",
+      why: "“A little differently” lowers the temperature. Asking permission makes people listen instead of bracing for a fight." },
+
+    { c: "disagree",
+      s: "Someone states a “fact” you’re fairly sure is wrong.",
+      a: "I may be wrong, but I thought it was the other way around.",
+      alts: ["Interesting. Where did you read that? I’d seen something different."],
+      why: "Leaving room to be wrong lets them change course without losing face. And if you are the one who’s wrong, you’ve lost nothing." },
+
+    { c: "disagree",
+      s: "A discussion is going in circles, and neither of you will move.",
+      a: "I think we see this differently, and that’s all right. I’ve enjoyed hearing your view.",
+      alts: ["Let’s agree to disagree."],
+      why: "You end the argument and keep the relationship. Closing on appreciation stops it from feeling like a defeat for either side." },
+
+    { c: "disagree",
+      s: "Your boss is excited about a plan you think will fail.",
+      a: "I want this to work, so help me understand how we’d handle the budget risk.",
+      why: "“Help me understand” invites them to examine the weak spot themselves. People rarely argue with a flaw they found on their own." },
+
+    { c: "disagree",
+      s: "Someone makes an offensive joke and waits for everyone to laugh.",
+      a: "I’m not sure I get it. Can you explain?",
+      why: "A calm, straight face and a request to explain makes the speaker hear the joke out loud. It usually ends right there, without a scene." },
+
+    { c: "disagree",
+      s: "You need to tell a senior person, in front of others, that they’re mistaken.",
+      a: "With respect, I see it differently, and here’s why.",
+      why: "Respect first, then a reason, delivered calmly. A note on tone: in British usage, “with the greatest respect” usually means “I think you’re quite wrong,” so plain “with respect” is the safer choice." },
+
+    // ── Buying time ────────────────────────────────────────────
+    { c: "time",
+      s: "Someone wants a decision from you on the spot.",
+      a: "This deserves proper thought. Let me come back to you by Friday.",
+      why: "Naming a time turns a dodge into a commitment. People accept a delay when they know when it ends." },
+
+    { c: "time",
+      s: "You’re asked a question in a meeting and you don’t know the answer.",
+      a: "Good question. I don’t want to guess, so let me check and get back to you today.",
+      why: "Admitting you don’t know, with a plan to find out, earns more trust than a confident guess that turns out to be wrong." },
+
+    { c: "time",
+      s: "Someone pitches you a proposal you’re not keen on, and you can’t turn it down right now.",
+      a: "Thank you. We’ll give it careful consideration.",
+      why: "Official language, and widely understood: it often signals that a polite no is on its way. Use it when you genuinely need time, and always follow up either way." },
+
+    { c: "time",
+      s: "Someone wants you to promise something you’re not sure you can deliver.",
+      a: "I’d rather not promise what I can’t be sure of. Here’s what I can commit to.",
+      why: "Turning an uncertain yes into a smaller, certain one makes you someone whose word means something." },
+
+    { c: "time",
+      s: "You’re asked a sensitive question in front of other people.",
+      a: "That’s a conversation worth having properly. Shall we pick it up afterwards?",
+      why: "You move a delicate topic to a calmer, private setting without refusing it." },
+
+    // ── Under pressure ─────────────────────────────────────────
+    { c: "pressure",
+      s: "Someone criticizes you, and you think they’re being unfair.",
+      a: "Thank you for telling me. I’ll think about that.",
+      why: "You neither accept nor reject it on the spot. You stay composed, and you can answer later, once you’ve cooled down, if it still needs a reply." },
+
+    { c: "pressure",
+      s: "An upset customer or neighbor is venting at you.",
+      a: "I can hear how frustrating this has been. Let’s see what we can do.",
+      why: "Naming the feeling helps someone feel heard, which usually lowers the volume. Then you move straight to action.",
+      avoid: "“Calm down.” It almost never works." },
+
+    { c: "pressure",
+      s: "You made a mistake, and someone points it out.",
+      a: "You’re right, that was my mistake. Here’s how I’ll put it right.",
+      why: "A clean apology with no “but” disarms people. Moving straight to the fix shows responsibility rather than guilt." },
+
+    { c: "pressure",
+      s: "Someone keeps interrupting you.",
+      a: "I’d love to hear your thoughts, just as soon as I’ve finished this point.",
+      why: "Warm and firm, and it promises them a turn. You hold the floor without a fight." },
+
+    { c: "pressure",
+      s: "Someone is clearly trying to provoke you into losing your temper.",
+      a: "I can see this matters a lot to you. Let’s talk about it when we’re both calmer.",
+      why: "Refusing the bait, politely, is the most powerful move available. It ends the scene and leaves you the one who kept their dignity." },
+
+    // ── Grace notes ────────────────────────────────────────────
+    { c: "grace",
+      s: "Someone pays you a big compliment and you feel awkward.",
+      a: "Thank you, that really means a lot.",
+      why: "Simply accept it. Brushing it off (“Oh, this old thing”) quietly tells the giver they were wrong." },
+
+    { c: "grace",
+      s: "A friend has lost someone close, and you don’t know what to say.",
+      a: "I’m so sorry. I don’t have the right words, but I’m here for you.",
+      why: "Presence matters more than eloquence. Admitting you have no words is honest, and it comforts.",
+      avoid: "“Everything happens for a reason” or “I know exactly how you feel.”" },
+
+    { c: "grace",
+      s: "A colleague gets the promotion you were hoping for.",
+      a: "Congratulations. You’ve earned it, and I’m glad for you.",
+      why: "Generosity in someone else’s moment is remembered for a long time. Your disappointment can be dealt with later, in private." },
+
+    { c: "grace",
+      s: "Someone thanks you for a favor that was, honestly, a huge hassle.",
+      a: "It was my pleasure.",
+      why: "The hassle is yours to keep. Mentioning it would only spoil their gratitude." },
+
+    { c: "grace",
+      s: "Someone offers you a sincere apology.",
+      a: "Thank you for saying that. I really appreciate it.",
+      why: "“No problem” can brush aside the effort it took, especially if it was a problem. Acknowledging the apology accepts it with grace." },
+
+    // ── Exits ──────────────────────────────────────────────────
+    { c: "exit",
+      s: "At a party, you’re stuck in a conversation that won’t end.",
+      a: "I mustn’t keep you all to myself. It’s been a real pleasure.",
+      alts: ["I’m going to get a drink. It was lovely talking with you."],
+      why: "You leave by flattering them: they are in demand. Ending on something warm makes it feel like a natural close rather than an escape." },
+
+    { c: "exit",
+      s: "A phone call is going on far too long.",
+      a: "I’ll let you go. It’s been so good to catch up.",
+      why: "“I’ll let you go” frames the ending as a courtesy to them. It’s so well established that nobody takes it amiss." },
+
+    { c: "exit",
+      s: "A meeting has drifted off-topic and is running over time.",
+      a: "This is a great discussion. Shall we continue it separately so we can wrap up on time?",
+      why: "You value the topic and protect everyone’s time in the same breath." },
+
+    // ── Diplomat-speak ─────────────────────────────────────────
+    { c: "diplomat",
+      s: "You met someone and argued for the entire hour. Afterwards, people ask how it went.",
+      a: "We had a frank and candid exchange of views.",
+      why: "Communiqué language for “we disagreed sharply.” It’s truthful, it admits nothing embarrassing, and it keeps the door open for next time." },
+
+    { c: "diplomat",
+      s: "Long talks, no agreement, and nobody wants to say they failed.",
+      a: "The talks were constructive, and we’ve agreed to continue the dialogue.",
+      why: "“Constructive” means nobody walked out. “Continue the dialogue” means nothing has been agreed yet, but both sides still want a deal." },
+
+    { c: "diplomat",
+      s: "Someone presents a proposal you won’t act on, but you don’t want to reject it publicly.",
+      a: "We take note of your proposal.",
+      why: "In UN resolutions, “takes note of” is the coolest form of acknowledgment: weaker than “welcomes,” far from “endorses.” It means: heard, and not supported." },
+
+    { c: "diplomat",
+      s: "Someone has done something you strongly object to, and you have to say so publicly without escalating.",
+      a: "We view this development with concern.",
+      why: "Official statements climb a ladder: “concern,” then “serious concern,” then “grave concern.” Each step is a deliberate signal, so starting low leaves you room to climb." },
+
+    { c: "diplomat",
+      s: "You have to say no, but a flat “no” would cause offense.",
+      a: "That would be very difficult.",
+      why: "In Japanese business culture, “that would be difficult” (muzukashii desu) is widely understood as a polite no. Many cultures hear a blunt no as rude, and this lets everyone save face." },
+
+    { c: "diplomat",
+      s: "You’re asked about a rumor before anything has been decided.",
+      a: "I wouldn’t want to get ahead of the process.",
+      why: "A spokesperson’s line. You aren’t confirming or denying anything; you’re politely declining to speculate." },
+
+    { c: "diplomat",
+      s: "Relations have cooled, and you want to show goodwill without giving anything away.",
+      a: "Our door remains open.",
+      why: "It signals willingness to talk again without conceding a single point. Warm in tone, firm in substance." }
+  ];
+
+  CARDS.forEach(function (card, i) { card.id = i; card.n = i + 1; });
+  var CAT_LABEL = {};
+  CATS.forEach(function (c) { CAT_LABEL[c.id] = c.label; });
+
+  // ── helpers ─────────────────────────────────────────────────
+  function $(sel) { return document.querySelector(sel); }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (ch) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[ch];
+    });
+  }
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function naturalOrder() { return CARDS.map(function (c) { return c.id; }); }
+  function shuffled(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  var reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+
+  // ── state & storage ─────────────────────────────────────────
+  var KEY = "nice-answers:v1";
+  function load() {
+    try { return JSON.parse(window.localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+  }
+  function validOrder(o) {
+    if (!Array.isArray(o) || o.length !== CARDS.length) return false;
+    var seen = {};
+    for (var i = 0; i < o.length; i++) {
+      if (!Number.isInteger(o[i]) || !CARDS[o[i]] || seen[o[i]]) return false;
+      seen[o[i]] = true;
+    }
+    return true;
+  }
+  function validFilter(f) {
+    return f === "all" || f === "saved" || CATS.some(function (c) { return c.id === f; });
+  }
+
+  var stored = load();
+  var state = {
+    filter: validFilter(stored.filter) ? stored.filter : "all",
+    shuffled: !!stored.shuffled && validOrder(stored.order),
+    order: validOrder(stored.order) ? stored.order : naturalOrder(),
+    saved: new Set((Array.isArray(stored.saved) ? stored.saved : []).filter(function (id) { return Number.isInteger(id) && CARDS[id]; })),
+    view: stored.view === "list" ? "list" : "slides",
+    deck: [],
+    pos: 0,
+    revealed: false,
+    attempts: {}
+  };
+
+  function computeDeck() {
+    var base = state.shuffled ? state.order : naturalOrder();
+    return base.filter(function (id) {
+      if (state.filter === "all") return true;
+      if (state.filter === "saved") return state.saved.has(id);
+      return CARDS[id].c === state.filter;
+    });
+  }
+  function currentCard() {
+    var id = state.deck[state.pos];
+    return id === undefined ? null : CARDS[id];
+  }
+  function persist() {
+    var cur = currentCard();
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify({
+        saved: Array.from(state.saved),
+        filter: state.filter,
+        shuffled: state.shuffled,
+        order: state.order,
+        view: state.view,
+        cardId: cur ? cur.id : null
+      }));
+    } catch (e) { /* storage unavailable: the page still works, it just won't remember */ }
+  }
+
+  state.deck = computeDeck();
+  if (Number.isInteger(stored.cardId)) {
+    var startAt = state.deck.indexOf(stored.cardId);
+    if (startAt >= 0) state.pos = startAt;
+  }
+
+  // ── rendering ───────────────────────────────────────────────
+  var cardEl = $("#card");
+  var listEl = $("#list");
+
+  function renderChips() {
+    var items = [{ id: "all", label: "All" }].concat(CATS, [{ id: "saved", label: "Remembered" }]);
+    $("#chips").innerHTML = items.map(function (it) {
+      var count = it.id === "saved" ? '<span class="count">' + state.saved.size + "</span>" : "";
+      return '<button type="button" class="chip" data-filter="' + it.id + '" aria-pressed="' + (state.filter === it.id) + '">' +
+        esc(it.label) + count + "</button>";
+    }).join("");
+  }
+
+  function slideHTML(c) {
+    var total = state.deck.length;
+    var isDiplomat = c.c === "diplomat";
+    var alts = c.alts && c.alts.length
+      ? '<div class="alts"><p class="label">Also works</p><ul>' +
+          c.alts.map(function (t) { return "<li>“" + esc(t) + "”</li>"; }).join("") + "</ul></div>"
+      : "";
+    var avoid = c.avoid
+      ? '<p class="avoid"><span class="label">Better not to say</span>' + esc(c.avoid) + "</p>"
+      : "";
+    return '' +
+      '<header class="card-head">' +
+        "<span>Briefing № " + pad(c.n) + "</span>" +
+        '<span class="cat">' + esc(CAT_LABEL[c.c]) + "</span>" +
+        '<span class="pos">' + pad(state.pos + 1) + " / " + pad(total) + "</span>" +
+      "</header>" +
+      "<div>" +
+        '<p class="eyebrow">The situation</p>' +
+        '<p class="situation">' + esc(c.s) + "</p>" +
+      "</div>" +
+      '<div class="attempt">' +
+        '<label class="prompt" for="attempt">What would you say?</label>' +
+        '<textarea id="attempt" rows="2" placeholder="Try your own words first (optional)"></textarea>' +
+      "</div>" +
+      '<button type="button" class="open-btn" id="open" data-act="open"' + (state.revealed ? " hidden" : "") + ">" +
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5h17v12h-17z"/><path d="m3.5 7.5 8.5 6.5 8.5-6.5"/></svg>' +
+        "Open the answer" +
+      "</button>" +
+      '<section class="answer" id="answer" tabindex="-1" aria-label="The answer"' + (state.revealed ? "" : " hidden") + ">" +
+        '<span class="stamp">Talking point</span>' +
+        '<blockquote class="phrase">“' + esc(c.a) + "”</blockquote>" +
+        alts +
+        '<div class="why"><p class="label">' + (isDiplomat ? "What it really means" : "Why it works") + "</p><p>" + esc(c.why) + "</p></div>" +
+        avoid +
+      "</section>";
+  }
+
+  function finishHTML() {
+    var n = state.deck.length;
+    var label = state.filter === "all" ? "" : " in " + (state.filter === "saved" ? "Remembered" : CAT_LABEL[state.filter]);
+    var savedBtn = state.saved.size && state.filter !== "saved"
+      ? '<button type="button" class="btn" data-act="review">Review remembered (' + state.saved.size + ")</button>"
+      : "";
+    return '' +
+      '<header class="card-head"><span>End of briefing</span><span class="pos">' + pad(n) + " / " + pad(n) + "</span></header>" +
+      '<div class="finish">' +
+        '<p class="eyebrow">Well done</p>' +
+        "<h2>You’ve reached the end of the deck.</h2>" +
+        "<p>That was " + (n === 1 ? "the one situation" : "all " + n + " situations") + esc(label) + ". Go round again in a new order. The phrases stick best when you say them out loud a few times.</p>" +
+        '<div class="finish-actions">' +
+          '<button type="button" class="btn primary" data-act="reshuffle">Shuffle and start again</button>' +
+          '<button type="button" class="btn" data-act="restart">Start from the top</button>' +
+          savedBtn +
+        "</div>" +
+      "</div>";
+  }
+
+  function emptyHTML() {
+    return '' +
+      '<header class="card-head"><span>Remembered</span><span class="pos">00 / 00</span></header>' +
+      '<div class="finish">' +
+        '<p class="eyebrow">Nothing here yet</p>' +
+        "<h2>Your personal phrasebook is empty.</h2>" +
+        "<p>Open any answer and tap “Remember” to keep it here. Come back to this list before a dinner, a meeting or a difficult call.</p>" +
+        '<div class="finish-actions"><button type="button" class="btn primary" data-act="all">Browse all situations</button></div>' +
+      "</div>";
+  }
+
+  function renderCard(dir) {
+    var c = currentCard();
+    if (!state.deck.length) cardEl.innerHTML = emptyHTML();
+    else if (!c) cardEl.innerHTML = finishHTML();
+    else cardEl.innerHTML = slideHTML(c);
+
+    var ta = $("#attempt");
+    if (ta && c) {
+      ta.value = state.attempts[c.id] || "";
+      ta.addEventListener("input", function () { state.attempts[c.id] = ta.value; });
+    }
+
+    cardEl.classList.remove("enter-next", "enter-prev");
+    if (dir && !reduceMotion) {
+      void cardEl.offsetWidth; // restart the animation
+      cardEl.classList.add("enter-" + dir);
+    }
+  }
+
+  function renderBar() {
+    var c = currentCard();
+    var hasDeck = state.deck.length > 0;
+    $("#prev").disabled = !hasDeck || state.pos === 0;
+    $("#next").disabled = !hasDeck || !c;
+    var save = $("#save");
+    var isSaved = !!c && state.saved.has(c.id);
+    save.disabled = !c;
+    save.setAttribute("aria-pressed", String(isSaved));
+    $("#saveLabel").textContent = isSaved ? "Remembered" : "Remember";
+  }
+
+  function renderList() {
+    var d = state.deck;
+    var scope = state.filter === "all" ? "" : " · " + (state.filter === "saved" ? "Remembered" : CAT_LABEL[state.filter]);
+    if (!d.length) {
+      listEl.innerHTML = '<div class="card">' + emptyHTML() + "</div>";
+      return;
+    }
+    listEl.innerHTML = '' +
+      '<p class="list-head">' + d.length + " situation" + (d.length === 1 ? "" : "s") + esc(scope) + ". Tap one to practice it as a slide.</p>" +
+      '<ol class="ledger">' +
+      d.map(function (id, i) {
+        var c = CARDS[id];
+        var mark = state.saved.has(id) ? ' · <span class="saved-mark">Remembered</span>' : "";
+        return '<li><button type="button" class="row" data-jump="' + i + '">' +
+          '<span class="row-meta">№ ' + pad(c.n) + " · " + esc(CAT_LABEL[c.c]) + mark + "</span>" +
+          '<span class="row-sit">' + esc(c.s) + "</span>" +
+          '<span class="row-ans">“' + esc(c.a) + "”</span>" +
+        "</button></li>";
+      }).join("") +
+      "</ol>";
+  }
+
+  function render(dir) {
+    renderChips();
+    $("#viewSlides").setAttribute("aria-pressed", String(state.view === "slides"));
+    $("#viewList").setAttribute("aria-pressed", String(state.view === "list"));
+    $("#shuffle").setAttribute("aria-pressed", String(state.shuffled));
+    var slides = state.view === "slides";
+    cardEl.hidden = !slides;
+    listEl.hidden = slides;
+    $("#deckbar").hidden = !slides;
+    $("#keys").hidden = !slides;
+    if (slides) { renderCard(dir); renderBar(); }
+    else renderList();
+  }
+
+  // ── actions ─────────────────────────────────────────────────
+  function bringCardIntoView() {
+    var top = cardEl.getBoundingClientRect().top;
+    if (top < 0) cardEl.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+  }
+
+  function go(delta) {
+    if (!state.deck.length) return;
+    var next = Math.min(Math.max(state.pos + delta, 0), state.deck.length); // deck.length = end screen
+    if (next === state.pos) return;
+    state.pos = next;
+    state.revealed = false;
+    renderCard(delta > 0 ? "next" : "prev");
+    renderBar();
+    bringCardIntoView();
+    persist();
+  }
+
+  function reveal() {
+    if (state.revealed || !currentCard()) return;
+    state.revealed = true;
+    var ans = $("#answer");
+    var btn = $("#open");
+    if (btn) btn.hidden = true;
+    if (!ans) return;
+    ans.hidden = false;
+    if (!reduceMotion) ans.classList.add("is-new");
+    ans.focus({ preventScroll: true });
+    var r = ans.getBoundingClientRect();
+    var barH = $("#deckbar").getBoundingClientRect().height + 24;
+    var overflow = r.bottom - (window.innerHeight - barH);
+    if (overflow > 0) {
+      window.scrollBy({ top: Math.min(overflow, r.top - 16), behavior: reduceMotion ? "auto" : "smooth" });
+    }
+  }
+
+  function toggleSave() {
+    var c = currentCard();
+    if (!c) return;
+    if (state.saved.has(c.id)) state.saved.delete(c.id); else state.saved.add(c.id);
+    renderBar();
+    renderChips();
+    persist();
+  }
+
+  function setFilter(f) {
+    if (!validFilter(f)) return;
+    state.filter = f;
+    state.deck = computeDeck();
+    state.pos = 0;
+    state.revealed = false;
+    render(state.view === "slides" ? "next" : null);
+    persist();
+  }
+
+  function setShuffle(on) {
+    state.shuffled = on;
+    if (on) state.order = shuffled(naturalOrder());
+    state.deck = computeDeck();
+    state.pos = 0;
+    state.revealed = false;
+    render(state.view === "slides" ? "next" : null);
+    persist();
+  }
+
+  function setView(v) {
+    if (state.view === v) return;
+    state.view = v;
+    if (v === "slides") state.deck = computeDeck();
+    render(null);
+    persist();
+  }
+
+  // ── wiring ──────────────────────────────────────────────────
+  $("#chips").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-filter]");
+    if (b) setFilter(b.getAttribute("data-filter"));
+  });
+  $("#viewSlides").addEventListener("click", function () { setView("slides"); });
+  $("#viewList").addEventListener("click", function () { setView("list"); });
+  $("#shuffle").addEventListener("click", function () { setShuffle(!state.shuffled); });
+  $("#prev").addEventListener("click", function () { go(-1); });
+  $("#next").addEventListener("click", function () { go(1); });
+  $("#save").addEventListener("click", toggleSave);
+
+  cardEl.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-act]");
+    if (!b) return;
+    var act = b.getAttribute("data-act");
+    if (act === "open") reveal();
+    else if (act === "restart") { state.pos = 0; state.revealed = false; renderCard("next"); renderBar(); bringCardIntoView(); persist(); }
+    else if (act === "reshuffle") { setShuffle(true); bringCardIntoView(); }
+    else if (act === "review") setFilter("saved");
+    else if (act === "all") setFilter("all");
+  });
+
+  listEl.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-jump]");
+    if (b) {
+      state.view = "slides";
+      state.pos = Number(b.getAttribute("data-jump"));
+      state.revealed = false;
+      render("next");
+      bringCardIntoView();
+      persist();
+      return;
+    }
+    var a = e.target.closest("[data-act]");
+    if (a && a.getAttribute("data-act") === "all") setFilter("all");
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (t.closest && t.closest("textarea, input, select, [contenteditable]")) {
+      if (e.key === "Escape") t.blur();
+      return;
+    }
+    if (state.view !== "slides") return;
+    // Space/Enter belong to the deck unless focus is on some other control (a topic, a menu button).
+    var onControl = t.closest && t.closest("button, a");
+    var onDeckButton = t.closest && t.closest("#deckbar button");
+    if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+    else if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+    else if ((e.key === " " && (!onControl || onDeckButton)) || (e.key === "Enter" && !onControl)) {
+      e.preventDefault();
+      if (!state.revealed && currentCard()) reveal(); else go(1);
+    }
+    else if (e.key === "s" || e.key === "S") { toggleSave(); }
+  });
+
+  // swipe left / right on the card
+  var touchX = null, touchY = null;
+  cardEl.addEventListener("touchstart", function (e) {
+    if (e.target.closest("textarea")) { touchX = null; return; }
+    var p = e.changedTouches[0];
+    touchX = p.clientX; touchY = p.clientY;
+  }, { passive: true });
+  cardEl.addEventListener("touchend", function (e) {
+    if (touchX === null) return;
+    var p = e.changedTouches[0];
+    var dx = p.clientX - touchX, dy = p.clientY - touchY;
+    touchX = null;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  render(null);
+})();
+</script>
+</body>
+</html>
